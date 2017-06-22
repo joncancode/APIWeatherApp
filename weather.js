@@ -9,8 +9,7 @@ const state = {
 //--2-- function
 
 //must include http:// protocol
-var OPENWEATHER_SEARCH_URL = 'http://api.openweathermap.org/data/2.5/weather';
-console.log(OPENWEATHER_SEARCH_URL);
+var OPENWEATHER_SEARCH_URL = 'http://api.openweathermap.org/data/2.5/find';
 
 function getDataFromApi(searchTerm, callback) {
   var query = {
@@ -18,15 +17,14 @@ function getDataFromApi(searchTerm, callback) {
     appid: "b518aac4e68754c3d5ef20b99bcc6111",
   }
   $.getJSON(OPENWEATHER_SEARCH_URL, query, function(response){
-   console.log(response.name); 
+   displayOpenWeatherData(response);
+   renderData();
   });
 }
 
 function displayOpenWeatherData(data) {
-  
-  state.results = data.items
-  renderData()
-  
+  state.results = data;
+  console.log(state.results);
 }
 
 //getDataFromApi("london");
@@ -35,16 +33,25 @@ function displayOpenWeatherData(data) {
 //--3-- render
 
 function renderData() {
-    console.log("rendering")
+	var searchResults = "";
+	var searchResultsTitle = "";
+	for (var prop in state.results) {
+		searchResults += (`
+            <p>${state.results.list.name}, ${state.results[prop]['list']['sys']['country']}</p>`);
+		searchResultsTitle += (`
+						<h3>Results for ${state.results[prop]['name']}</h3>`);
+	};
+	$('.js-search-results').html(searchResultsTitle);
+	$('.js-list-items').html(searchResults);
+
 }
 
-console.log("rendering", renderData())
 
 
 //--4-- event handlers
 
 $('.js-search-form').submit(function(event){
-  event.preventDefault();
+  	event.preventDefault();
 
     var inputElement = $(event.currentTarget).find('.js-query');
     var inputValue = inputElement.val();
@@ -52,3 +59,4 @@ $('.js-search-form').submit(function(event){
     inputElement.val("");
 
 })
+
