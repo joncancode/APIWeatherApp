@@ -1,7 +1,6 @@
 //--1-- state
 const state = {
-
-  //selected city property
+  
   view: ".js-starting-form",
   results: []
 }
@@ -48,7 +47,11 @@ function displayOpenWeatherData(data) {
 function findImage() {
   var displayImage = ""
 
-  if (state.results.list[0].weather[0].description.includes("clear")) {
+  if (state.results.list[0].weather[0].description.includes("clear"))  {
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/jLfC1gJfqMyZO/giphy.gif">
+    <h3>The weather is sunny</h3>`
+  }
+  else if (state.results.list[0].weather[0].description.includes("Clear"))  {
     displayImage = `<img class = "image-size" src="https://media.giphy.com/media/jLfC1gJfqMyZO/giphy.gif">
     <h3>The weather is sunny</h3>`
   }
