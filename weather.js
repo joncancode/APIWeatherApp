@@ -69,33 +69,17 @@ function findImage() {
   return displayImage
 }
 
-
-
-
 //--3-- render
-
-
 function render() {
 
   function renderView() {
-    if (state.view === '.js-starting-form') {
-      $('.js-starting-form').show()
-      $('.js-search').hide()
-      $('.js-result-display').hide()
-      $('.js-result-details').hide()
-    } else if (state.view === '.js-search') {
+  if (state.view === '.js-search') {
       $('.js-starting-form').hide()
       $('.js-search').show()
-      $('.js-result-display').hide()
-      $('.js-result-details').hide()
     } else if (state.view === '.js-result-display') {
-      $('.js-starting-form').hide()
       $('.js-search').hide()
       $('.js-result-display').show()
-      $('.js-result-details').hide()
     } else if (state.view === '.js-result-details') {
-      $('.js-starting-form').hide()
-      $('.js-search').hide()
       $('.js-result-display').hide()
       $('.js-result-details').show()
     }
@@ -106,14 +90,10 @@ function render() {
     var searchResults = "";
     var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
     var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
-
-
     for (var prop in state.results.list) {
       searchResults += (`
-              <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
+              <p>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</p>`);
     };
-
-
     $('.js-search-results').html(searchResultsTitle);
     $('.js-list-items').html(searchResults);
     $('.js-result-display h1').html(displayResultsTitle);
@@ -122,10 +102,7 @@ function render() {
   renderData();
 }
 
-
-
 //--4-- event handlers
-
 $('.js-search-form').submit(function (event) {
   event.preventDefault();
   state.view = ".js-search"
@@ -133,22 +110,6 @@ $('.js-search-form').submit(function (event) {
   var inputValue = inputElement.val();
   getDataFromApi(inputValue, displayOpenWeatherData);
   inputElement.val("");
-})
-
-$('.more-info').on('click', function (event) {
-  event.preventDefault();
-  $('.js-starting-form').hide()
-  $('.js-result-display').hide()
-  $('.js-result-details').show()
-})
-
-$('.start-over').on('click', function (event) {
-  event.preventDefault();
-  state.view = ".js-starting-form"
-  $('.js-starting-form').show()
-  $('.js-search').hide()
-  $('.js-result-display').hide()
-  $('.js-result-details').hide()
 })
 
 $('.js-list-items').on('click', function (event) {
@@ -160,17 +121,23 @@ $('.js-list-items').on('click', function (event) {
   $('.js-result-display').show()
 })
 
+$('.more-info').on('click', function (event) {
+  event.preventDefault();
+  $('.js-result-display').hide()
+  $('.js-result-details').show()
+})
+
 $('.less-info').on('click', function (event) {
   event.preventDefault();
-  $('.js-starting-form').hide()
   $('.js-result-display').show()
   $('.js-result-details').hide()
 })
 
-
-//what EH should do: receive info from the dom.. change the state.. then run render function
-
-//turn result items into clickable links render
-//event handlers for start over button (listen to parent)
-//event handlers for more info button (listen to parent)
-//degrees F and C 
+$('.start-over').on('click', function (event) {
+  event.preventDefault();
+  state.view = ".js-starting-form"
+  $('.js-starting-form').show()
+  $('.js-search').hide()
+  $('.js-result-display').hide()
+  $('.js-result-details').hide()
+})

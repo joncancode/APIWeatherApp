@@ -29,11 +29,20 @@ button {
 	margin-bottom: 20px;
 }
 
-li {
-    list-style-type: none;
+p {
     text-decoration: underline;
     margin-top: 10px;
     margin-bottom: 10px;
+    text-align: center;
+}
+
+p:hover {
+	cursor: pointer;
+}
+
+button:hover {
+	cursor: pointer;
+	color: blue;
 }
 
 .image-size {
