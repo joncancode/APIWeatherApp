@@ -3,6 +3,11 @@
 	box-sizing: border-box;
 }
 
+body {
+	background: url(seamless-pattern-weather-symbols-multicolored-checkered-background-38926613.png) no-repeat;
+	background-size: cover;
+}
+
 .container {
 	width: 600px;
 	height: 1000px;
