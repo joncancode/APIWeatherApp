@@ -66,7 +66,8 @@ if (state.view === '.js-starting-form') {
 
 	$('.js-search-results').html(searchResultsTitle);
 	$('.js-list-items').html(searchResults);
-  $('.js-result-display').html(displayResultsTitle);
+  $('.js-result-display h1').html(displayResultsTitle);
+  $('.js-result-details h1').html(displayResultsTitle);
 }
 
 
