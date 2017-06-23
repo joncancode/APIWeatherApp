@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>API Weather App</title>
+    <link rel="stylesheet" href="weather.css">
 </head>
+
 <body>
     <div class="js-starting-form">
         <h1>What's The Weather In...</h1>
         <form action="#" class="js-search-form">
-        <label for="query"></label>
-        <button type="submit">GO!</button>
-        <input type="text" class="js-query">
-        <label for="query">?</label>
+            <label for="query"></label>
+            <button type="submit">GO!</button>
+            <input type="text" class="js-query">
+            <label for="query">?</label>
         </form>
     </div>
-    <div>
+    <div class="js-search hidden">
         <div class="js-search-results">
         </div>
         <ul class="js-list-items">
+            <li></li>
         </ul>
         <button class="start-over">Start Over</button>
     </div>
-    <div class="js-result-display">
+    <div class="js-result-display hidden">
         <h1>'X'</h1>
         <img class="weather-image" src="">
         <button class="more-info">More Info</button>
         <button class="start-over">Start Over</button>
     </div>
-    <div class="js-result-details">
+    <div class="js-result-details hidden">
         <h1>'X'</h1>
         <img class="weather-image" src="">
         <button class="more-info">More Info</button>
@@ -37,7 +41,8 @@
 
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="weather.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="weather.js"></script>
 </body>
+
 </html>

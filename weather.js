@@ -1,10 +1,9 @@
 //--1-- state
 const state = {
 
+    view: ".js-starting-form",
    results: []
-
 }
-
 
 //--2-- function
 
@@ -29,18 +28,41 @@ function displayOpenWeatherData(data) {
 
 //getDataFromApi("london");
 
-
 //--3-- render
 
+
 function renderData() {
+
+if (state.view === '.js-starting-form') {
+  	$('.js-starting-form').show()
+    $('.js-search').hide()
+    $('.js-result-display').hide()
+    $('.js-result-details').hide()
+} else if (state.view === '.js-search') {
+  	$('.js-starting-form').hide()
+    $('.js-search').show()
+    $('.js-result-display').hide()
+    $('.js-result-details').hide()
+} else if (state.view === '.js-result-display') {
+  	$('.js-starting-form').hide()
+    $('.js-search').hide()
+    $('.js-result-display').show()
+    $('.js-result-details').hide()
+} else if (state.view === '.js-result-details') {
+  	$('.js-starting-form').hide()
+    $('.js-search').hide()
+    $('.js-result-display').hide()
+    $('.js-result-details').show()
+}
+
 	var searchResults = "";
-	var searchResultsTitle = "";
-	for (var prop in state.results) {
+	var searchResultsTitle = `<h3>Results for ${state.results.list[0]['name']}</h3>`;
+	for (var prop in state.results.list) {
 		searchResults += (`
-            <p>${state.results.list.name}, ${state.results[prop]['list']['sys']['country']}</p>`);
-		searchResultsTitle += (`
-						<h3>Results for ${state.results[prop]['name']}</h3>`);
+            <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
 	};
+
+
 	$('.js-search-results').html(searchResultsTitle);
 	$('.js-list-items').html(searchResults);
 
@@ -51,12 +73,46 @@ function renderData() {
 //--4-- event handlers
 
 $('.js-search-form').submit(function(event){
-  	event.preventDefault();
-
+    event.preventDefault();
+    state.view = ".js-search"
+    //state.view = ".js-search"
+    // $(".js-search").removeClass(".hidden")
+    // $(".js-result-form").addClass(".hidden")
+    console.log("go button")
     var inputElement = $(event.currentTarget).find('.js-query');
     var inputValue = inputElement.val();
     getDataFromApi(inputValue, displayOpenWeatherData);
     inputElement.val("");
-
 })
 
+$('.more-info').on('click', function(event) {
+		event.preventDefault();
+    console.log("clicked more info")
+    $('.js-starting-form').hide()
+    $('.js-result-display').hide()
+    $('.js-result-details').show()
+	})
+
+$('.start-over').on('click', function(event) {
+		event.preventDefault();
+    console.log("clicked start over")
+		state.view = ".js-starting-form"
+    $('.js-starting-form').show()
+    $('.js-search').hide()
+    $('.js-result-display').hide()
+    $('.js-result-details').hide()
+	})
+
+$('.js-list-items').on('click', function(event) {
+		event.preventDefault();
+    console.log("clicked list")
+		state.view = ".js-result-display"
+    $('.js-search').hide()
+    $('.js-result-display').show()
+	})
+
+
+//turn result items into clickable links render
+//event handlers for start over button (listen to parent)
+//event handlers for more info button (listen to parent)
+//degrees F and C 
