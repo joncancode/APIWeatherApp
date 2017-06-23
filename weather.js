@@ -33,6 +33,7 @@ function displayOpenWeatherData(data) {
 
 function renderData() {
 
+//separate renderview and renderdata
 if (state.view === '.js-starting-form') {
   	$('.js-starting-form').show()
     $('.js-search').hide()
@@ -56,7 +57,7 @@ if (state.view === '.js-starting-form') {
 }
 
 	var searchResults = "";
-	var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h3>`;
+	var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
   var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
 	for (var prop in state.results.list) {
 		searchResults += (`
