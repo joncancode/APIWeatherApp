@@ -29,50 +29,53 @@ function displayOpenWeatherData(data) {
   function convertDegrees() {
 
     var kelvin = state.results.list[0].main.temp
-    console.log("test")
     function convertToF() {
       var fDegrees = Math.floor(((kelvin - 273.15) * 1.8) + 32) + " degrees Fahrenheit"
-      console.log("farhen", fDegrees)
+      $('.js-degrees-fahrenheit').text(fDegrees);
     }
     convertToF()
     function convertToC() {
       var cDegrees = Math.floor(kelvin-273.15) + " degrees Celsius"
-      console.log("celsius", cDegrees)
+      $('.js-degrees-celsius').text(cDegrees);
     }
     convertToC()
   }
   convertDegrees()
+
+
 }
 
 function findImage() {
   var displayImage = ""
 
   if (state.results.list[0].weather[0].description.includes("clear")) {
-    displayImage = `<img class = "image-size" src="images/sun.jpg">
-    <p>The weather is sunny</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/jLfC1gJfqMyZO/giphy.gif">
+    <h3>The weather is sunny</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("cloud")) {
-    displayImage = `<img class = "image-size" src="images/cloudy.jpg">
-    <p>The weather is cloudy</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/osXVD7sb6C8eI/giphy.gif">
+    <h3>The weather is cloudy</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("rain")) {
-    displayImage = `<img class = "image-size" src="images/rain.jpg">
-    <p>It's rainy</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/vMRDAT7oqbMfm/giphy.gif">
+    <h3>It's rainy</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("thunder")) {
-    displayImage = `<img class = "image-size" src="images/thunder.jpg">
-    <p>There are thunderstorms</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/26uf5HjasTtxtNCqQ/giphy.gif">
+    <h3>There are thunderstorms</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("snow")) {
-    displayImage = `<img class = "image-size" src="images/snow.png">
-    <p>It's snowing</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/7zUvkN7hNQiK4/giphy.gif">
+    <h3>It's snowing</h3>`
   }
   else {
-    displayImage = `<img class = "image-size" src="images/question.png"> 
-    <p>weather unknown at this time</p>`
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/107udTe1LbQUvK/giphy.gif"> 
+    <h4>Weather Unknown At This Time</h4>`
   }
   return displayImage
 }
+
+
 
 
 //--3-- render
@@ -130,7 +133,6 @@ $('.js-search-form').submit(function (event) {
   //state.view = ".js-search"
   // $(".js-search").removeClass(".hidden")
   // $(".js-result-form").addClass(".hidden")
-  console.log("go button")
   var inputElement = $(event.currentTarget).find('.js-query');
   var inputValue = inputElement.val();
   getDataFromApi(inputValue, displayOpenWeatherData);
@@ -160,6 +162,13 @@ $('.js-list-items').on('click', function (event) {
   $('.weather-image').html(displayImage)
   $('.js-search').hide()
   $('.js-result-display').show()
+})
+
+$('.less-info').on('click', function (event) {
+  event.preventDefault();
+  $('.js-starting-form').hide()
+  $('.js-result-display').show()
+  $('.js-result-details').hide()
 })
 
 

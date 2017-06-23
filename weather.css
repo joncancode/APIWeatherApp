@@ -1,15 +1,44 @@
+* {
+	margin: auto;
+	box-sizing: border-box;
+}
+
+.container {
+	width: 600px;
+	height: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-top: 100px;
+}
+
+.js-starting-form h1 {
+	padding-bottom: 20px;
+}
+
 .hidden {
     display: none
 }
 
+.js-search-results {
+	padding-bottom: 20px;
+}
+
+button {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
 li {
     list-style-type: none;
-    text-decoration: underline
+    text-decoration: underline;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .image-size {
-    width: 130px;
-    height: 130px;
+    width: 250px;
+    height: 250px;
 
 }
 
