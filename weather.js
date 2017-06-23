@@ -1,15 +1,11 @@
 //--1-- state
-const state = {
-  
+const state = {  
   view: ".js-starting-form",
   results: []
 }
 
 //--2-- function
-
-//must include http:// protocol
 var OPENWEATHER_SEARCH_URL = 'http://api.openweathermap.org/data/2.5/find';
-
 function getDataFromApi(searchTerm, callback) {
   var query = {
     q: searchTerm,
@@ -17,47 +13,42 @@ function getDataFromApi(searchTerm, callback) {
   }
   $.getJSON(OPENWEATHER_SEARCH_URL, query, function (response) {
     displayOpenWeatherData(response);
-    renderData();
+    render();
   });
 }
 
 
 function displayOpenWeatherData(data) {
   state.results = data;
-
   function convertDegrees() {
-
     var kelvin = state.results.list[0].main.temp
     function convertToF() {
-      var fDegrees = Math.floor(((kelvin - 273.15) * 1.8) + 32) + " degrees Fahrenheit"
+      var fDegrees = Math.floor(((kelvin - 273.15) * 1.8) + 32) + " Degrees Fahrenheit"
       $('.js-degrees-fahrenheit').text(fDegrees);
     }
     convertToF()
     function convertToC() {
-      var cDegrees = Math.floor(kelvin-273.15) + " degrees Celsius"
+      var cDegrees = Math.floor(kelvin-273.15) + " Degrees Celsius"
       $('.js-degrees-celsius').text(cDegrees);
     }
     convertToC()
   }
   convertDegrees()
-
-
 }
 
 function findImage() {
   var displayImage = ""
-
   if (state.results.list[0].weather[0].description.includes("clear"))  {
     displayImage = `<img class = "image-size" src="https://media.giphy.com/media/jLfC1gJfqMyZO/giphy.gif">
-    <h3>The weather is sunny</h3>`
+    <h3>It's sunny</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("Clear"))  {
     displayImage = `<img class = "image-size" src="https://media.giphy.com/media/jLfC1gJfqMyZO/giphy.gif">
-    <h3>The weather is sunny</h3>`
+    <h3>It's sunny</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("cloud")) {
     displayImage = `<img class = "image-size" src="https://media.giphy.com/media/osXVD7sb6C8eI/giphy.gif">
-    <h3>The weather is cloudy</h3>`
+    <h3>It's cloudy</h3>`
   }
   else if (state.results.list[0].weather[0].description.includes("rain")) {
     displayImage = `<img class = "image-size" src="https://media.giphy.com/media/vMRDAT7oqbMfm/giphy.gif">
@@ -84,46 +75,51 @@ function findImage() {
 //--3-- render
 
 
-function renderData() {
+function render() {
 
-  //separate renderview and renderdata
-  if (state.view === '.js-starting-form') {
-    $('.js-starting-form').show()
-    $('.js-search').hide()
-    $('.js-result-display').hide()
-    $('.js-result-details').hide()
-  } else if (state.view === '.js-search') {
-    $('.js-starting-form').hide()
-    $('.js-search').show()
-    $('.js-result-display').hide()
-    $('.js-result-details').hide()
-  } else if (state.view === '.js-result-display') {
-    $('.js-starting-form').hide()
-    $('.js-search').hide()
-    $('.js-result-display').show()
-    $('.js-result-details').hide()
-  } else if (state.view === '.js-result-details') {
-    $('.js-starting-form').hide()
-    $('.js-search').hide()
-    $('.js-result-display').hide()
-    $('.js-result-details').show()
+  function renderView() {
+    if (state.view === '.js-starting-form') {
+      $('.js-starting-form').show()
+      $('.js-search').hide()
+      $('.js-result-display').hide()
+      $('.js-result-details').hide()
+    } else if (state.view === '.js-search') {
+      $('.js-starting-form').hide()
+      $('.js-search').show()
+      $('.js-result-display').hide()
+      $('.js-result-details').hide()
+    } else if (state.view === '.js-result-display') {
+      $('.js-starting-form').hide()
+      $('.js-search').hide()
+      $('.js-result-display').show()
+      $('.js-result-details').hide()
+    } else if (state.view === '.js-result-details') {
+      $('.js-starting-form').hide()
+      $('.js-search').hide()
+      $('.js-result-display').hide()
+      $('.js-result-details').show()
+    }
   }
+  renderView();
 
-  var searchResults = "";
-  var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
-  var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
-
-
-  for (var prop in state.results.list) {
-    searchResults += (`
-            <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
-  };
+  function renderData() {
+    var searchResults = "";
+    var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
+    var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
 
 
-  $('.js-search-results').html(searchResultsTitle);
-  $('.js-list-items').html(searchResults);
-  $('.js-result-display h1').html(displayResultsTitle);
-  $('.js-result-details h1').html(displayResultsTitle);
+    for (var prop in state.results.list) {
+      searchResults += (`
+              <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
+    };
+
+
+    $('.js-search-results').html(searchResultsTitle);
+    $('.js-list-items').html(searchResults);
+    $('.js-result-display h1').html(displayResultsTitle);
+    $('.js-result-details h1').html(displayResultsTitle);
+  }
+  renderData();
 }
 
 
@@ -133,9 +129,6 @@ function renderData() {
 $('.js-search-form').submit(function (event) {
   event.preventDefault();
   state.view = ".js-search"
-  //state.view = ".js-search"
-  // $(".js-search").removeClass(".hidden")
-  // $(".js-result-form").addClass(".hidden")
   var inputElement = $(event.currentTarget).find('.js-query');
   var inputValue = inputElement.val();
   getDataFromApi(inputValue, displayOpenWeatherData);
