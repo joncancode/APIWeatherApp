@@ -56,7 +56,8 @@ if (state.view === '.js-starting-form') {
 }
 
 	var searchResults = "";
-	var searchResultsTitle = `<h3>Results for ${state.results.list[0]['name']}</h3>`;
+	var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h3>`;
+  var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
 	for (var prop in state.results.list) {
 		searchResults += (`
             <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
@@ -65,7 +66,7 @@ if (state.view === '.js-starting-form') {
 
 	$('.js-search-results').html(searchResultsTitle);
 	$('.js-list-items').html(searchResults);
-
+  $('.js-result-display').html(displayResultsTitle);
 }
 
 
