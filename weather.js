@@ -1,8 +1,9 @@
 //--1-- state
 const state = {
 
-    view: ".js-starting-form",
-   results: []
+  //selected city property
+  view: ".js-starting-form",
+  results: []
 }
 
 //--2-- function
@@ -15,58 +16,106 @@ function getDataFromApi(searchTerm, callback) {
     q: searchTerm,
     appid: "b518aac4e68754c3d5ef20b99bcc6111",
   }
-  $.getJSON(OPENWEATHER_SEARCH_URL, query, function(response){
-   displayOpenWeatherData(response);
-   renderData();
+  $.getJSON(OPENWEATHER_SEARCH_URL, query, function (response) {
+    displayOpenWeatherData(response);
+    renderData();
   });
 }
 
+
 function displayOpenWeatherData(data) {
   state.results = data;
-  console.log(state.results);
+
+  function convertDegrees() {
+
+    var kelvin = state.results.list[0].main.temp
+    console.log("test")
+    function convertToF() {
+      var fDegrees = Math.floor(((kelvin - 273.15) * 1.8) + 32) + " degrees Fahrenheit"
+      console.log("farhen", fDegrees)
+    }
+    convertToF()
+    function convertToC() {
+      var cDegrees = Math.floor(kelvin-273.15) + " degrees Celsius"
+      console.log("celsius", cDegrees)
+    }
+    convertToC()
+  }
+  convertDegrees()
 }
 
-//getDataFromApi("london");
+function findImage() {
+  var displayImage = ""
+
+  if (state.results.list[0].weather[0].description.includes("clear")) {
+    displayImage = `<img class = "image-size" src="images/sun.jpg">
+    <p>The weather is sunny</p>`
+  }
+  else if (state.results.list[0].weather[0].description.includes("cloud")) {
+    displayImage = `<img class = "image-size" src="images/cloudy.jpg">
+    <p>The weather is cloudy</p>`
+  }
+  else if (state.results.list[0].weather[0].description.includes("rain")) {
+    displayImage = `<img class = "image-size" src="images/rain.jpg">
+    <p>It's rainy</p>`
+  }
+  else if (state.results.list[0].weather[0].description.includes("thunder")) {
+    displayImage = `<img class = "image-size" src="images/thunder.jpg">
+    <p>There are thunderstorms</p>`
+  }
+  else if (state.results.list[0].weather[0].description.includes("snow")) {
+    displayImage = `<img class = "image-size" src="images/snow.png">
+    <p>It's snowing</p>`
+  }
+  else {
+    displayImage = `<img class = "image-size" src="images/question.png"> 
+    <p>weather unknown at this time</p>`
+  }
+  return displayImage
+}
+
 
 //--3-- render
 
 
 function renderData() {
 
-//separate renderview and renderdata
-if (state.view === '.js-starting-form') {
-  	$('.js-starting-form').show()
+  //separate renderview and renderdata
+  if (state.view === '.js-starting-form') {
+    $('.js-starting-form').show()
     $('.js-search').hide()
     $('.js-result-display').hide()
     $('.js-result-details').hide()
-} else if (state.view === '.js-search') {
-  	$('.js-starting-form').hide()
+  } else if (state.view === '.js-search') {
+    $('.js-starting-form').hide()
     $('.js-search').show()
     $('.js-result-display').hide()
     $('.js-result-details').hide()
-} else if (state.view === '.js-result-display') {
-  	$('.js-starting-form').hide()
+  } else if (state.view === '.js-result-display') {
+    $('.js-starting-form').hide()
     $('.js-search').hide()
     $('.js-result-display').show()
     $('.js-result-details').hide()
-} else if (state.view === '.js-result-details') {
-  	$('.js-starting-form').hide()
+  } else if (state.view === '.js-result-details') {
+    $('.js-starting-form').hide()
     $('.js-search').hide()
     $('.js-result-display').hide()
     $('.js-result-details').show()
-}
+  }
 
-	var searchResults = "";
-	var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
+  var searchResults = "";
+  var searchResultsTitle = `<h1>Results for ${state.results.list[0]['name']}</h1>`;
   var displayResultsTitle = `<h1>${state.results.list[0]['name']}</h1>`;
-	for (var prop in state.results.list) {
-		searchResults += (`
+
+
+  for (var prop in state.results.list) {
+    searchResults += (`
             <li>${state.results.list[prop].name}, ${state.results.list[prop]['sys']['country']}</li>`);
-	};
+  };
 
 
-	$('.js-search-results').html(searchResultsTitle);
-	$('.js-list-items').html(searchResults);
+  $('.js-search-results').html(searchResultsTitle);
+  $('.js-list-items').html(searchResults);
   $('.js-result-display h1').html(displayResultsTitle);
   $('.js-result-details h1').html(displayResultsTitle);
 }
@@ -75,45 +124,46 @@ if (state.view === '.js-starting-form') {
 
 //--4-- event handlers
 
-$('.js-search-form').submit(function(event){
-    event.preventDefault();
-    state.view = ".js-search"
-    //state.view = ".js-search"
-    // $(".js-search").removeClass(".hidden")
-    // $(".js-result-form").addClass(".hidden")
-    console.log("go button")
-    var inputElement = $(event.currentTarget).find('.js-query');
-    var inputValue = inputElement.val();
-    getDataFromApi(inputValue, displayOpenWeatherData);
-    inputElement.val("");
+$('.js-search-form').submit(function (event) {
+  event.preventDefault();
+  state.view = ".js-search"
+  //state.view = ".js-search"
+  // $(".js-search").removeClass(".hidden")
+  // $(".js-result-form").addClass(".hidden")
+  console.log("go button")
+  var inputElement = $(event.currentTarget).find('.js-query');
+  var inputValue = inputElement.val();
+  getDataFromApi(inputValue, displayOpenWeatherData);
+  inputElement.val("");
 })
 
-$('.more-info').on('click', function(event) {
-		event.preventDefault();
-    console.log("clicked more info")
-    $('.js-starting-form').hide()
-    $('.js-result-display').hide()
-    $('.js-result-details').show()
-	})
+$('.more-info').on('click', function (event) {
+  event.preventDefault();
+  $('.js-starting-form').hide()
+  $('.js-result-display').hide()
+  $('.js-result-details').show()
+})
 
-$('.start-over').on('click', function(event) {
-		event.preventDefault();
-    console.log("clicked start over")
-		state.view = ".js-starting-form"
-    $('.js-starting-form').show()
-    $('.js-search').hide()
-    $('.js-result-display').hide()
-    $('.js-result-details').hide()
-	})
+$('.start-over').on('click', function (event) {
+  event.preventDefault();
+  state.view = ".js-starting-form"
+  $('.js-starting-form').show()
+  $('.js-search').hide()
+  $('.js-result-display').hide()
+  $('.js-result-details').hide()
+})
 
-$('.js-list-items').on('click', function(event) {
-		event.preventDefault();
-    console.log("clicked list")
-		state.view = ".js-result-display"
-    $('.js-search').hide()
-    $('.js-result-display').show()
-	})
+$('.js-list-items').on('click', function (event) {
+  event.preventDefault();
+  state.view = ".js-result-display"
+  var displayImage = findImage()
+  $('.weather-image').html(displayImage)
+  $('.js-search').hide()
+  $('.js-result-display').show()
+})
 
+
+//what EH should do: receive info from the dom.. change the state.. then run render function
 
 //turn result items into clickable links render
 //event handlers for start over button (listen to parent)

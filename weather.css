@@ -6,3 +6,17 @@ li {
     list-style-type: none;
     text-decoration: underline
 }
+
+.image-size {
+    width: 130px;
+    height: 130px;
+
+}
+
+.js-degrees-fahrenheit {
+    color: red
+}
+
+.js-degrees-celsius {
+    color: blue
+}
