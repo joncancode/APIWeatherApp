@@ -5,7 +5,7 @@ const state = {
 }
 
 //--2-- function
-var OPENWEATHER_SEARCH_URL = 'http://api.openweathermap.org/data/2.5/find';
+var OPENWEATHER_SEARCH_URL = 'https://api.openweathermap.org/data/2.5/find';
 function getDataFromApi(searchTerm, callback) {
   var query = {
     q: searchTerm,
