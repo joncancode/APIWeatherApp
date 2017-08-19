@@ -63,7 +63,7 @@ function findImage() {
     <h3>It's snowing</h3>`
   }
   else {
-    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/107udTe1LbQUvK/giphy.gif"> 
+    displayImage = `<img class = "image-size" src="https://media.giphy.com/media/nVTa8D8zJUc2A/giphy.gif"> 
     <h4>Weather Unknown At This Time</h4>`
   }
   return displayImage
